@@ -1,8 +1,8 @@
-package com.gabriel.pokedex
+package com.gabriel.pokedex.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.gabriel.pokedex.ui.main.MainFragment
+import com.gabriel.pokedex.R
 
 class MainActivity : AppCompatActivity() {
 

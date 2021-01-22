@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.ui.main
+package com.gabriel.pokedex.features.viewmodel
 
 import androidx.lifecycle.ViewModel
 

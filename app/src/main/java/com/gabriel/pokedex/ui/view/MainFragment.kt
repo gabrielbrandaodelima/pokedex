@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.ui.main
+package com.gabriel.pokedex.ui.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gabriel.pokedex.R
+import com.gabriel.pokedex.features.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
