@@ -21,8 +21,18 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            debuggable = false
+            buildConfigField "String", "SERVER_URL", "\"https://pokeapi.co/\""
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            minifyEnabled false
+            debuggable = true
+            buildConfigField "String", "SERVER_URL", "\"https://pokeapi.co/\""
         }
     }
     compileOptions {

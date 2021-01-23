@@ -1,5 +1,6 @@
 package com.gabriel.pokedex.core.data
 
+import com.gabriel.pokedex.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
