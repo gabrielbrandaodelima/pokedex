@@ -17,7 +17,8 @@ class PokedexViewModel (
 
     private val _pokesList = MutableLiveData<Pair<List<PokemonListing>?, Int>>()
     val pokesList: LiveData<Pair<List<PokemonListing>?, Int>> = _pokesList
-    private var offset: Int = 20 // Handles paging,
+    private val PAGE_1 = 20 // Handles paging,
+    private var offset: Int = PAGE_1 // Handles paging,
     // offset= 20 page 1, 40 page 2, 60 page 3 ...
 
 
@@ -25,7 +26,7 @@ class PokedexViewModel (
 
     fun fetchPokemonsList() {
         when (offset) {
-            1 -> _loading.postValue(true)
+            PAGE_1 -> _loading.postValue(true)
             else -> _pageLoading.postValue(true)
         }
         viewModelScope.launch(coroutinesContext) {
@@ -33,16 +34,17 @@ class PokedexViewModel (
                 .catch { e ->
                     handleFailure(e.message)
                     when (offset) {
-                        1 -> _loading.postValue(false)
+                        PAGE_1 -> _loading.postValue(false)
                         else -> _pageLoading.postValue(false)
                     }
                 }
-                .collect { repos ->
-                    _pokesList.postValue(Pair(repos, offset))
-                    when (offset++) {
-                        1 -> _loading.postValue(false)
+                .collect { pokes ->
+                    _pokesList.postValue(Pair(pokes, offset))
+                    when (offset) {
+                        PAGE_1 -> _loading.postValue(false)
                         else -> _pageLoading.postValue(false)
                     }
+                    offset += 20
                 }
         }
     }

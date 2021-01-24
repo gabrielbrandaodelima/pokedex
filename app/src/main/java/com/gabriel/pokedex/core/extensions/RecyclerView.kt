@@ -2,6 +2,7 @@ package com.gabriel.pokedex.core.extensions
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
@@ -14,7 +15,7 @@ fun RecyclerView?.setUpRecyclerView(
         setHasFixedSize(true)
         setItemViewCacheSize(20)
         context?.let {
-            layoutManager = LinearLayoutManager((it), orientation, false)
+            layoutManager = GridLayoutManager((it), 2, orientation, false)
         }
 
         adapterSetCallback(this)
