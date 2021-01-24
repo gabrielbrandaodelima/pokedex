@@ -73,13 +73,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:overScrollMode="never"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pokedex_recycler_view"
             android:layout_width="match_parent"
@@ -93,5 +86,22 @@
             tools:itemCount="20"
             tools:listitem="@layout/item_pokemon"
             tools:spanCount="2" />
-    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:layout_gravity="center"
+        android:id="@+id/recycler_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:indeterminateTint="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:layout_gravity="bottom|center"
+        android:id="@+id/paging_progress"
+        android:indeterminateTint="@color/colorAccent"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_marginBottom="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
