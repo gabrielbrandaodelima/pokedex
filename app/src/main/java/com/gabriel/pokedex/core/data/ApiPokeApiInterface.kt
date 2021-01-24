@@ -11,7 +11,7 @@ interface ApiPokeApiInterface {
 
     @GET("api/v2/pokemon/")
     suspend fun fetchPokemonsList(
-        @Query("offset") page: Int
+        @Query("offset") offset: Int
     ): PokemonListingResponse
 
     @GET("api/v2/pokemon/{id}/")
