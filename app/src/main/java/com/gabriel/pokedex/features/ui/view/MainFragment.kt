@@ -1,30 +1,32 @@
 package com.gabriel.pokedex.features.ui.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.gabriel.pokedex.R
+import com.gabriel.pokedex.core.domain.model.response.PokemonListing
+import com.gabriel.pokedex.core.extensions.observe
 import com.gabriel.pokedex.core.platform.BaseFragment
-import com.gabriel.pokedex.features.viewmodel.MainViewModel
+import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 
+import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 
 
-    private lateinit var viewModel: MainViewModel
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    val viewModel: PokedexViewModel by viewModel()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.apply {
+            observe(pokesList,::handleSuccessPokemonsList)
+        }
+        viewModel.fetchPokemonsList()
+
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+    private fun handleSuccessPokemonsList(pair: Pair<List<PokemonListing>?, Int>?) {
+
     }
+
 
 }
