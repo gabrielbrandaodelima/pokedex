@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_pokemon_frame_layout"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_margin="8dp"
+    android:background="@drawable/background_item_pokemon"
+    android:clickable="true"
+    android:clipToPadding="false"
+    android:focusable="true"
+    android:padding="8dp"
+    tools:backgroundTint="@color/lightTeal">
+
+    <TextView
+        android:id="@+id/item_poke_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/circularstd_medium"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:fontFamily="@font/circularstd_medium"
+        tools:text="Name" />
+
+    <TextView
+        android:id="@+id/item_poke_id_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|top"
+        android:alpha="0.25"
+        android:gravity="top"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="#001" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_poke_type1_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_item_pokemon_span"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            tools:text="Type 1"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+
+            android:id="@+id/item_poke_type2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/background_item_pokemon_span"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            tools:text="Type 2"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <TextView
+
+            android:id="@+id/item_poke_type3_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:background="@drawable/background_item_pokemon_span"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            tools:text="Type 3"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="-16dp"
+        android:layout_marginBottom="-24dp"
+        android:adjustViewBounds="true"
+        android:alpha="0.25"
+        android:src="@drawable/pokeball"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/item_poke_image_view"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="end|bottom"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_launcher_foreground" />
+
+
+</FrameLayout>
