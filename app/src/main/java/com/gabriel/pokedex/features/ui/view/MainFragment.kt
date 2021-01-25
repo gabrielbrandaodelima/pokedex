@@ -2,7 +2,9 @@ package com.gabriel.pokedex.features.ui.view
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.gabriel.pokedex.R
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.domain.model.response.PokemonListing
@@ -13,6 +15,7 @@ import com.gabriel.pokedex.features.ui.adapter.PokemonAdapter
 import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 class MainFragment : BaseFragment(R.layout.fragment_main) {
 
 
@@ -20,7 +23,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     val viewModel: PokedexViewModel by viewModel()
 
     private var needsLoading = MutableLiveData(true)
-    private var pokesList: List<PokemonListing>? = null
+    private var pokesList: List<Pokemon>? = null
 
     private var pokemonAdapter: PokemonAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,8 +37,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private fun setUpRecyclerView() {
 
         binding.pokedexRecyclerView?.apply {
-            setUpRecyclerView(requireContext(),{
-                pokemonAdapter = PokemonAdapter(arrayListOf(),::handlePokemonClicked)
+            setUpRecyclerView(requireContext(), {
+                pokemonAdapter = PokemonAdapter(arrayListOf(), ::handlePokemonClicked)
                 adapter = pokemonAdapter
             })
 
@@ -48,26 +51,36 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     private fun handlePokemonClicked(pokemon: Pokemon?) {
 
+        findNavController().navigate(R.id.pokemonDetailsFragment, Bundle().apply {
+            putParcelable("pokemon", pokemon)
+        })
 
     }
 
     private fun initViewModel() {
         viewModel.apply {
-            observe(pokesList,::handleSuccessPokemonsList)
-            observe(pokesDetailList,::loadPokemonImagesInList)
+//            observe(pokesList, ::handleSuccessPokemonsList)
+            observe(pokesDetailList, ::handleSuccessPokemonsList)
             observe(pageLoading, {
                 it?.let { it1 -> managePageProgress(it1) }
             })
             observe(loading, {
                 it?.let { it1 -> manageProgress(it1) }
             })
-            failure(failure,::handleFailure)
+            failure(failure, ::handleFailure)
         }
         viewModel.fetchPokemonsList()
     }
 
+    var count = 0
     private fun loadPokemonImagesInList(arrayList: java.util.ArrayList<Pokemon>?) {
-        pokemonAdapter?.loadPokemonsInfo(arrayList)
+        Toast.makeText(
+            requireContext(),
+            "finished: ${arrayList?.size} - ${count++} ",
+            Toast.LENGTH_LONG
+        ).show()
+//        if (arrayList?.size ?: 0 > 0)
+//            pokemonAdapter?.loadPokemonsInfo(arrayList)
     }
 
 
@@ -86,17 +99,17 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         binding.pagingProgress.visibility(loading)
     }
 
-    private fun handleSuccessPokemonsList(pair: Pair<List<PokemonListing>?, Int>?) {
+    private fun handleSuccessPokemonsList(pair: Pair<List<Pokemon>?, Int>?) {
         needsLoading.postValue(true)
         val list = pair?.first
         val page = pair?.second
         if (page == 20) {
             pokesList = list
-            pokemonAdapter?.addAll(list as ArrayList<PokemonListing>)
+            pokemonAdapter?.addAll(list as ArrayList<Pokemon>)
         } else {
 
             list?.toMutableList()?.let { pokesList?.toMutableList()?.addAll(it) }
-            pokemonAdapter?.appendAll(list as ArrayList<PokemonListing>)
+            pokemonAdapter?.appendAll(list as ArrayList<Pokemon>)
         }
     }
 
