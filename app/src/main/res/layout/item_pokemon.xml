@@ -51,6 +51,8 @@
             android:background="@drawable/background_item_pokemon_span"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             tools:text="Type 1"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -61,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|bottom"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:layout_marginBottom="8dp"
             android:background="@drawable/background_item_pokemon_span"
             android:paddingStart="8dp"
@@ -78,6 +82,8 @@
             android:background="@drawable/background_item_pokemon_span"
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
+            android:visibility="gone"
+            tools:visibility="visible"
             tools:text="Type 3"
             android:textColor="@color/white"
             android:textSize="14sp" />

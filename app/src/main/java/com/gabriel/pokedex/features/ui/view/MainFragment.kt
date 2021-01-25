@@ -46,13 +46,15 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
     }
 
-    private fun handlePokemonClicked(pokemonListing: PokemonListing) {
+    private fun handlePokemonClicked(pokemon: Pokemon?) {
+
 
     }
 
     private fun initViewModel() {
         viewModel.apply {
             observe(pokesList,::handleSuccessPokemonsList)
+            observe(pokesDetailList,::loadPokemonImagesInList)
             observe(pageLoading, {
                 it?.let { it1 -> managePageProgress(it1) }
             })
@@ -63,6 +65,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
         }
         viewModel.fetchPokemonsList()
     }
+
+    private fun loadPokemonImagesInList(arrayList: java.util.ArrayList<Pokemon>?) {
+        pokemonAdapter?.loadPokemonsInfo(arrayList)
+    }
+
 
     private fun manageProgress(loading: Boolean) {
         if (loading) {
