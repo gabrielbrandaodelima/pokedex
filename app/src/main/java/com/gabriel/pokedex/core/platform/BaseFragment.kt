@@ -21,6 +21,6 @@ abstract class BaseFragment(@LayoutRes layoutIdRes: Int = 0) : Fragment(layoutId
 
     protected fun handleFailure(failure: String?) {
 
-        Toast.makeText(requireContext(), failure, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), failure, Toast.LENGTH_LONG).show()
     }
 }

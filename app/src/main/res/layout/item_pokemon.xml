@@ -106,7 +106,7 @@
         android:layout_height="80dp"
         android:layout_gravity="end|bottom"
         android:adjustViewBounds="true"
-        android:src="@drawable/ic_launcher_foreground" />
+        tools:src="@drawable/ic_launcher_foreground" />
 
 
 </FrameLayout>
