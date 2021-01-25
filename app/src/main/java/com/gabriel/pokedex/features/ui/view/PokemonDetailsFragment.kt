@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.View
 import com.gabriel.pokedex.R
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
-import com.gabriel.pokedex.core.extensions.loadFromUrl
 import com.gabriel.pokedex.core.extensions.viewBinding
-import com.gabriel.pokedex.core.extensions.visible
 import com.gabriel.pokedex.core.platform.BaseFragment
 import com.gabriel.pokedex.databinding.FragmentDetailsBinding
 
-class PokemonDetailsFragment : BaseFragment(R.layout.fragment_details) {
+class PokemonDetailsFragment : BaseFragment(R.layout.fragment_pokemon_details) {
 
     private val binding by viewBinding(FragmentDetailsBinding::bind)
 

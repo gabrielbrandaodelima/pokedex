@@ -14,5 +14,5 @@
         android:id="@+id/pokemonDetailsFragment"
         android:name="com.gabriel.pokedex.features.ui.view.PokemonDetailsFragment"
         android:label="PokemonDetailsFragment"
-        tools:layout="@layout/fragment_details"/>
+        tools:layout="@layout/fragment_pokemon_details"/>
 </navigation>
