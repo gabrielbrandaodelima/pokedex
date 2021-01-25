@@ -4,13 +4,15 @@ import android.os.Bundle
 import android.view.View
 import com.gabriel.pokedex.R
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
+import com.gabriel.pokedex.core.extensions.loadFromUrl
 import com.gabriel.pokedex.core.extensions.viewBinding
+import com.gabriel.pokedex.core.extensions.visible
 import com.gabriel.pokedex.core.platform.BaseFragment
-import com.gabriel.pokedex.databinding.FragmentDetailsBinding
+import com.gabriel.pokedex.databinding.FragmentPokemonDetailsBinding
 
 class PokemonDetailsFragment : BaseFragment(R.layout.fragment_pokemon_details) {
 
-    private val binding by viewBinding(FragmentDetailsBinding::bind)
+    private val binding by viewBinding(FragmentPokemonDetailsBinding::bind)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
