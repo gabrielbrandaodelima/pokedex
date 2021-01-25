@@ -19,8 +19,9 @@ class PokedexViewModel(
 
     private val _pokesList = MutableLiveData<Pair<List<PokemonListing>?, Int>>()
     val pokesList: LiveData<Pair<List<PokemonListing>?, Int>> = _pokesList
-    val _pokesDetailList = MutableLiveData<ArrayList<Pokemon>>()
-    val pokesDetailList: LiveData<ArrayList<Pokemon>> = _pokesDetailList
+    val _pokesDetailList = MutableLiveData<Pair<ArrayList<Pokemon>,Int>>()
+    val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>,Int>> = _pokesDetailList
+    private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
     private val _pokemon = MutableLiveData<Pokemon>()
     private val pokemon: LiveData<Pokemon> = _pokemon
     private val PAGE_1 = 20 // Handles paging,
@@ -30,9 +31,6 @@ class PokedexViewModel(
 
     private val coroutinesContext = Dispatchers.IO
 
-    init {
-        _pokesDetailList.postValue(arrayListOf())
-    }
     fun fetchPokemonsList() {
         when (offset) {
             PAGE_1 -> _loading.postValue(true)
@@ -50,11 +48,6 @@ class PokedexViewModel(
                 .collect { pokes ->
                     handlePokemonsListAndGetPokemonsDetails(pokes)
                     _pokesList.postValue(Pair(pokes, offset))
-                    when (offset) {
-                        PAGE_1 -> _loading.postValue(false)
-                        else -> _pageLoading.postValue(false)
-                    }
-                    offset += 20
                 }
         }
     }
@@ -69,21 +62,41 @@ class PokedexViewModel(
         }
     }
 
+    private val errorIds = arrayListOf<String>()
     fun getPokemonDetail(id: String) {
 
         viewModelScope.launch(coroutinesContext) {
             pokeApiUseCase.getPokemonDetail(id)
                 .catch { e ->
                     handleFailure(e.message)
+                    errorIds.add(id)
+                    checkIfAllRequestsAreFinished()
                 }
                 .collect { poke ->
-
-                    poke?.let { _pokesDetailList.value?.add(it) }
-                    _pokesDetailList.postValue(_pokesDetailList.value)
-                    _pokemon.postValue(poke)
+                    poke?.let {
+                        if (pokemonArray.contains(it).not()) {
+                            pokemonArray.add(it)
+                        }
+                    }
+                    checkIfAllRequestsAreFinished()
                 }
 
 
+        }
+    }
+
+    private fun checkIfAllRequestsAreFinished() {
+        val errorCallbacks = errorIds.size
+        val successCallbacks = pokemonArray.size
+        val totalCallbacks = errorCallbacks + successCallbacks
+        val totalPokemonListing = _pokesList.value?.first?.size
+        if (totalCallbacks == totalPokemonListing) {
+            _pokesDetailList.postValue(Pair(pokemonArray, offset))
+            when (offset) {
+                PAGE_1 -> _loading.postValue(false)
+                else -> _pageLoading.postValue(false)
+            }
+            offset += 20
         }
     }
 }
