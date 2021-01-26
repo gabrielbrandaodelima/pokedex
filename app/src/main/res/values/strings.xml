@@ -23,4 +23,5 @@
     <string name="title_hp">HP</string>
     <string name="text_pokemon_saved">Saved Pokemon as Favorite! </string>
     <string name="main_search">Search Pokemon Name or id</string>
+    <string name="text_not_found">Pokemon not found...</string>
 </resources>

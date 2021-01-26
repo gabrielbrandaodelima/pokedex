@@ -47,7 +47,7 @@ fun String?.getSpannableMatchCase(mContext: Context,
             if (matchCaseIndexStart != -1) {
                 val color = ColorStateList(
                     arrayOf(intArrayOf()),
-                    intArrayOf(ContextCompat.getColor(mContext, R.color.black))
+                    intArrayOf(ContextCompat.getColor(mContext, R.color.colorOrange))
                 )
                 val boldSpan = TextAppearanceSpan(null, Typeface.BOLD, -1, color, null)
                 spannable.setSpan(boldSpan, matchCaseIndexStart, matchCaseIndexEnd, Spanned.SPAN_INTERMEDIATE)

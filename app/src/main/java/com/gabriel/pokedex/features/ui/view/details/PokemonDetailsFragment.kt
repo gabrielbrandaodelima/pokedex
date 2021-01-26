@@ -28,14 +28,28 @@ class PokemonDetailsFragment : BaseFragment(R.layout.fragment_pokemon_details) {
             showPokemonDetails(it)
         }
         viewModel?.apply {
-            observe(postPokeSuccess, ::handleSuccessFavorite)
+            observe(postPokeSuccess, ::handlePostPokemonCallback)
         }
     }
 
-    private fun handleSuccessFavorite(b: Boolean?) {
-        binding.pokeFavoriteStar?.visible()
-        Toast.makeText(requireContext(), getString(R.string.text_pokemon_saved), Toast.LENGTH_LONG)
-            .show()
+    private fun handlePostPokemonCallback(saved: Boolean?) {
+        if (saved == true) {
+            binding.pokeFavoriteStar?.visible()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.text_pokemon_saved),
+                Toast.LENGTH_LONG
+            )
+                .show()
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Internal error, please try again",
+                Toast.LENGTH_LONG
+            )
+                .show()
+
+        }
     }
 
     private fun showPokemonDetails(pokemon: Pokemon) {

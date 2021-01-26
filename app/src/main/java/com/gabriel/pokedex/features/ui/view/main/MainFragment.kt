@@ -76,6 +76,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
             searchView.gone()
             searchImgview.visible()
             searchTxtview.visible()
+            pokemonNotFoundFrameLayout.gone()
         }
 
     }
@@ -84,7 +85,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
         binding.pokedexRecyclerView?.apply {
             setUpRecyclerView(requireContext(), {
-                pokemonAdapter = PokemonAdapter(pokesList as ArrayList<Pokemon?>, ::handlePokemonClicked)
+                pokemonAdapter =
+                    PokemonAdapter(pokesList as ArrayList<Pokemon?>, ::handlePokemonClicked)
                 adapter = pokemonAdapter
             })
 
@@ -107,7 +109,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         viewModel.apply {
 //            observe(pokesList, ::handleSuccessPokemonsList)
             observe(pokesDetailList, ::handleSuccessPokemonsList)
-            observe(pokemonSearched, ::handleSuccessSearch)
+            observe(pokemonSearched, ::handlePokeSearch)
             observe(pageLoading, {
                 it?.let { it1 -> managePageProgress(it1) }
             })
@@ -181,7 +183,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     override fun onClose(): Boolean {
         hideSearchView()
         resetAdapter()
-        return true
+        return false
     }
 
     private fun filter(query: String?) {
@@ -189,19 +191,20 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
             val filtered =
                 pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
             (filtered as? ArrayList<Pokemon?>)?.let {
-                pokemonAdapter?.addAll(it,query)
+                pokemonAdapter?.addAll(it, query)
             }
         } else
             resetAdapter()
     }
 
     private fun resetAdapter() {
+        binding.pokemonNotFoundFrameLayout?.gone()
         (pokesList as? ArrayList<Pokemon?>)?.let {
             pokemonAdapter?.addAll(it)
         }
     }
 
-    fun handleSuccessSearch(pokemon: Pokemon?) {
+    private fun handlePokeSearch(pokemon: Pokemon?) {
         pokemon?.let {
             if (pokesList?.contains(it)?.not() == true)
                 pokesList?.toMutableList()?.add(it)
@@ -209,6 +212,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
                 pokemonAdapter?.appendAll(arrayListOf(pokemon))
             filter(it.name)
         }
+        binding.pokemonNotFoundFrameLayout.visibility(pokemon == null)
     }
 
 

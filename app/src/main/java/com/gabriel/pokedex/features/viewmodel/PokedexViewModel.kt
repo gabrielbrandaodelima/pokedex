@@ -26,8 +26,8 @@ class PokedexViewModel(
     private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
     private val pokemonPagingArray: ArrayList<Pokemon> = arrayListOf()
     private val errorIds = arrayListOf<String>()
-    private val _pokemonSearched = SingleLiveEvent<Pokemon>()
-    val pokemonSearched: LiveData<Pokemon> = _pokemonSearched
+    private val _pokemonSearched = SingleLiveEvent<Pokemon?>()
+    val pokemonSearched: LiveData<Pokemon?> = _pokemonSearched
     private val PAGE_1 = 20 // Handles paging,
     private var offset: Int = PAGE_1 // Handles paging,
     // offset= 20 page 1, 40 page 2, 60 page 3 ...
@@ -41,6 +41,7 @@ class PokedexViewModel(
     fun getPokemonsList(): ArrayList<Pokemon> {
         return pokemonArray
     }
+
     fun fetchPokemonsList(refresh: Boolean = false) {
         if (refresh) {
             offset = PAGE_1
@@ -102,6 +103,7 @@ class PokedexViewModel(
 
         }
     }
+
     fun searchPokemonDetail(id: String) {
 
         _loading.postValue(true)
@@ -112,11 +114,8 @@ class PokedexViewModel(
                     _loading.postValue(false)
                 }
                 .collect { poke ->
-                    poke?.let {
-                        _loading.postValue(false)
-                        _pokemonSearched.postValue(poke)
-                    }
-
+                    _loading.postValue(false)
+                    _pokemonSearched.postValue(poke)
                 }
 
 
@@ -129,6 +128,7 @@ class PokedexViewModel(
             pokeApiUseCase.postPokemon(pokemon)
                 .catch { e ->
                     handleFailure(e.toString())
+                    _postPokeSuccess.postValue(false)
                 }
                 .collect {
                     _postPokeSuccess.postValue(true)
