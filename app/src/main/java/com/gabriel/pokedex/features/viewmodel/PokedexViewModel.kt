@@ -1,5 +1,6 @@
 package com.gabriel.pokedex.features.viewmodel
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -154,6 +155,7 @@ class PokedexViewModel(
                     _pageLoading.postValue(false)
                 }
             }
+            needsLoading.postValue(true)
             offset += 20
         }
     }

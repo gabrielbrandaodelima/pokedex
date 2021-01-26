@@ -12,6 +12,8 @@ abstract class BaseViewModel : ViewModel() {
     protected val _pageLoading = MutableLiveData(false)
     var pageLoading : LiveData<Boolean> = _pageLoading
 
+    var needsLoading = MutableLiveData(false)
+
     protected val _loading = MutableLiveData(false)
     var loading : LiveData<Boolean> = _loading
 

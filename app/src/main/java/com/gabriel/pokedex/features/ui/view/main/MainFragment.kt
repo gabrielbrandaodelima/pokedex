@@ -7,6 +7,7 @@ import android.widget.SearchView
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.gabriel.pokedex.R
+import com.gabriel.pokedex.core.di.viewModelsModule
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.extensions.*
 import com.gabriel.pokedex.core.platform.BaseFragment
@@ -22,7 +23,6 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
     private val binding by viewBinding(FragmentMainBinding::bind)
 
-    private var needsLoading = MutableLiveData(false)
     private var pokesList: List<Pokemon>? = null
     private var searchView: SearchView? = null
 
@@ -88,7 +88,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
                 adapter = pokemonAdapter
             })
 
-            setUpPaging(needsLoading) {
+            setUpPaging(viewModel.needsLoading) {
                 viewModel.fetchPokemonsList()
             }
         }
@@ -137,7 +137,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     }
 
     private fun handleSuccessPokemonsList(pair: Pair<List<Pokemon>?, Int>?) {
-        needsLoading.postValue(true)
+
         binding.pokeSwipeRefreshLayout.isRefreshing = false
 
         val list = pair?.first
