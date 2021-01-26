@@ -21,7 +21,7 @@ class StatsAdapter(val list: List<Stats>?) : RecyclerView.Adapter<StatsAdapter.I
 
         fun bindView(stats: Stats?) {
             binding.apply {
-                pokemonStatsNameTv.text = stats?.stat?.name?.toUpperCase()
+                pokemonStatsNameTv.text = stats?.stat?.name?.capitalizeWords()?.toUpperCase()
                 pokemonStatsValueTv.text = stats?.base_stat?.toString()
                 pokemonStatsProgress?.progress = stats?.base_stat ?: 0
 
