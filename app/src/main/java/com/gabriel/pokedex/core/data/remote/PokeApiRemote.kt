@@ -3,16 +3,17 @@ package com.gabriel.pokedex.core.data.remote
 import com.gabriel.pokedex.core.data.ApiPokeApi
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.domain.model.response.PokemonListing
+import com.gabriel.pokedex.core.domain.model.response.PokemonListingResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class PokeApiRemote {
 
-    fun fetchPokemonsList(offset: Int): Flow<List<PokemonListing>?> {
+    fun fetchPokemonsList(offset: Int): Flow<PokemonListingResponse?> {
         return flow {
             try {
                 val pokes = ApiPokeApi.apiService.fetchPokemonsList(offset = offset)
-                emit(pokes.results)
+                emit(pokes)
             } catch (e: Exception) {
                 e.printStackTrace()
                 emit(null)

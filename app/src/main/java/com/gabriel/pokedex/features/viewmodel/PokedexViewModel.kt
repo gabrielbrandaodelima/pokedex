@@ -1,11 +1,10 @@
 package com.gabriel.pokedex.features.viewmodel
 
-import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
-import com.gabriel.pokedex.core.domain.model.response.PokemonListing
+import com.gabriel.pokedex.core.domain.model.response.PokemonListingResponse
 import com.gabriel.pokedex.core.domain.usecase.PokeApiUseCase
 import com.gabriel.pokedex.core.extensions.empty
 import com.gabriel.pokedex.core.platform.BaseViewModel
@@ -19,8 +18,9 @@ class PokedexViewModel(
     private val pokeApiUseCase: PokeApiUseCase
 ) : BaseViewModel() {
 
-    private val _pokesList = SingleLiveEvent<Pair<List<PokemonListing>?, Int>>()
-    val pokesList: LiveData<Pair<List<PokemonListing>?, Int>> = _pokesList
+    private var nextPageOffset: String = String.empty()
+    private val _pokesList = MutableLiveData<PokemonListingResponse?>()
+    val pokesList get() = _pokesList
     val _pokesDetailList = SingleLiveEvent<Pair<ArrayList<Pokemon>, Int>>()
     val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>, Int>> = _pokesDetailList
     private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
@@ -28,8 +28,8 @@ class PokedexViewModel(
     private val errorIds = arrayListOf<String>()
     private val _pokemonSearched = SingleLiveEvent<Pokemon?>()
     val pokemonSearched: LiveData<Pokemon?> = _pokemonSearched
-    private val PAGE_1 = 20 // Handles paging,
-    private var offset: Int = PAGE_1 // Handles paging,
+    private val PAGE_SIZE = 20 // Handles paging,
+    private var offset: Int = PAGE_SIZE // Handles paging,
     // offset= 20 page 1, 40 page 2, 60 page 3 ...
 
 
@@ -44,13 +44,14 @@ class PokedexViewModel(
 
     fun fetchPokemonsList(refresh: Boolean = false) {
         if (refresh) {
-            offset = PAGE_1
+            offset = PAGE_SIZE
+            nextPageOffset = String.empty()
             pokemonArray.clear()
         }
         pokemonPagingArray.clear()
         errorIds.clear()
         when (offset) {
-            PAGE_1 -> _loading.postValue(true)
+            PAGE_SIZE -> _loading.postValue(true)
             else -> _pageLoading.postValue(true)
         }
         viewModelScope.launch(coroutinesContext) {
@@ -58,23 +59,28 @@ class PokedexViewModel(
                 .catch { e ->
                     handleFailure(e.toString())
                     when (offset) {
-                        PAGE_1 -> _loading.postValue(false)
+                        PAGE_SIZE -> _loading.postValue(false)
                         else -> _pageLoading.postValue(false)
                     }
                 }
-                .collect { pokes ->
-                    handlePokemonsListAndGetPokemonsDetails(pokes)
-//                    _pokesList.postValue(Pair(pokes, offset))
+                .collect { pokeResponse ->
+                    handlePokemonsListAndGetPokemonsDetails(pokeResponse)
+                    _pokesList.postValue(pokeResponse)
                 }
         }
     }
 
-    private fun handlePokemonsListAndGetPokemonsDetails(pokes: List<PokemonListing>?) {
-        pokes?.forEach {
-            val url = it.url
-            val id = url?.substringAfterLast("https://pokeapi.co/api/v2/pokemon/")
-                ?.replace("/", String.empty())
-            getPokemonDetail(id.orEmpty())
+    private fun handlePokemonsListAndGetPokemonsDetails(pokes: PokemonListingResponse?) {
+        pokes?.apply {
+            nextPageOffset = //get next page offset from API
+                next?.substringAfterLast("offset=")?.substringBefore("&") ?: String.empty()
+            results?.forEach {
+                val url = it.url
+                val id = url?.substringAfterLast("https://pokeapi.co/api/v2/pokemon/")
+                    ?.replace("/", String.empty())
+                getPokemonDetail(id.orEmpty())
+
+            }
 
         }
     }
@@ -146,7 +152,7 @@ class PokedexViewModel(
         if (totalCallbacks == totalPokemonPageListing) {
 
             when (offset) {
-                PAGE_1 -> {
+                PAGE_SIZE -> {
                     _pokesDetailList.postValue(Pair(pokemonArray, offset))
                     _loading.postValue(false)
                 }
@@ -156,7 +162,7 @@ class PokedexViewModel(
                 }
             }
             needsLoading.postValue(true)
-            offset += 20
+            offset = nextPageOffset.toInt()
         }
     }
 }
