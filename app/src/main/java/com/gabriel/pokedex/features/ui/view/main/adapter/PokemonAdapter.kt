@@ -70,18 +70,30 @@ class PokemonAdapter(
                             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 
 
-                        itemPokeNameTv.text = when {
-                            querySearchText.isBlank() -> pokemon.name?.capitalize()
-                            else -> pokemon.name?.capitalize()
-                                .getSpannableMatchCase(itemView.context, querySearchText, true)
+                        when {
+                            querySearchText.isBlank() -> {
+                                itemPokeNameTv.text = pokemon.name?.capitalize()
+                                itemPokeIdTv.alpha = 0.25f
+                                itemPokeIdTv.text = itemView.context.getString(
+                                    R.string.text_id_pokemon,
+                                    pokemon.id.toString()
+                                )
+
+                            }
+                            else -> {
+                                itemPokeNameTv.text = pokemon.name?.capitalize()
+                                    .getSpannableMatchCase(itemView.context, querySearchText, true)
+                                itemPokeIdTv.alpha = 1.0f
+                                itemPokeIdTv.text = itemView.context.getString(
+                                    R.string.text_id_pokemon,
+                                    pokemon.id.toString()
+                                ).getSpannableMatchCase(itemView.context, querySearchText, true)
+
+                            }
                         }
 
 
                         itemPokeImageView.loadFromUrl(pokemon?.sprites?.other?.official_artwork?.front_default)
-                        itemPokeIdTv.text = itemView.context.getString(
-                            R.string.text_id_pokemon,
-                            pokemon.id.toString()
-                        )
                         pokemon?.types?.forEachIndexed { index, pokeTypes ->
                             when (index) {
                                 0 -> {

@@ -189,7 +189,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     private fun filter(query: String?) {
         if (query != null && query.isNotEmpty()) {
             val filtered =
-                pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
+                pokemonAdapter?.pokemonArray?.filter {
+                    it?.name?.contains(query) == true
+                            || it?.id?.toString()?.contains(query) == true
+                }
             (filtered as? ArrayList<Pokemon?>)?.let {
                 pokemonAdapter?.addAll(it, query)
             }
