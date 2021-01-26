@@ -11,14 +11,14 @@ class PokeApiUseCase (
     private val repository: PokeApiRepository
 ) {
 
-    suspend fun fetchPokemonsList(offset: Int): Flow<PokemonListingResponse?> {
+    suspend fun executeFetchPokemonsList(offset: Int): Flow<PokemonListingResponse?> {
         return repository.fetchPokemonsList(offset)
     }
 
-    suspend fun getPokemonDetail(id: String): Flow<Pokemon?> {
+    suspend fun executeGetPokemonDetail(id: String): Flow<Pokemon?> {
         return repository.getPokemonDetail(id)
     }
-    suspend fun postPokemon(pokemon: Pokemon): Flow<Void?> {
+    suspend fun executePostPokemon(pokemon: Pokemon): Flow<Void?> {
         return repository.postPokemon(pokemon)
     }
 

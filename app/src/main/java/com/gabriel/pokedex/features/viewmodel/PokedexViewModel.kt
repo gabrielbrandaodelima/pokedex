@@ -55,7 +55,7 @@ class PokedexViewModel(
             else -> _pageLoading.postValue(true)
         }
         viewModelScope.launch(coroutinesContext) {
-            pokeApiUseCase.fetchPokemonsList(offset)
+            pokeApiUseCase.executeFetchPokemonsList(offset)
                 .catch { e ->
                     handleFailure(e.toString())
                     when (offset) {
@@ -88,7 +88,7 @@ class PokedexViewModel(
     fun getPokemonDetail(id: String) {
 
         viewModelScope.launch(coroutinesContext) {
-            pokeApiUseCase.getPokemonDetail(id)
+            pokeApiUseCase.executeGetPokemonDetail(id)
                 .catch { e ->
                     handleFailure(e.toString())
                     errorIds.add(id)
@@ -114,7 +114,7 @@ class PokedexViewModel(
 
         _loading.postValue(true)
         viewModelScope.launch(coroutinesContext) {
-            pokeApiUseCase.getPokemonDetail(id)
+            pokeApiUseCase.executeGetPokemonDetail(id)
                 .catch { e ->
                     handleFailure(e.toString())
                     _loading.postValue(false)
@@ -131,7 +131,7 @@ class PokedexViewModel(
     fun postPokemon(pokemon: Pokemon) {
 
         viewModelScope.launch(coroutinesContext) {
-            pokeApiUseCase.postPokemon(pokemon)
+            pokeApiUseCase.executePostPokemon(pokemon)
                 .catch { e ->
                     handleFailure(e.toString())
                     _postPokeSuccess.postValue(false)
