@@ -18,6 +18,6 @@
     <string name="title_weight">Weight</string>
     <string name="title_gives">Gives</string>
     <string name="title_base_xp">Base EXP</string>
-    <string name="suffix_dm">\" decimetres\"</string>
-    <string name="suffix_hm">\" hectograms\"</string>
+    <string name="suffix_cm">%.2f cm</string>
+    <string name="suffix_kg">%.2f kg</string>
 </resources>

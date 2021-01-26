@@ -11,6 +11,7 @@ import com.gabriel.pokedex.databinding.FragmentAboutBinding
 class AboutFragment : BaseFragment(R.layout.fragment_about) {
 
     val binding: FragmentAboutBinding by viewBinding(FragmentAboutBinding::bind)
+
     companion object {
         @JvmStatic
         fun newInstance(pokemon: Pokemon?) = AboutFragment().apply {
@@ -25,8 +26,10 @@ class AboutFragment : BaseFragment(R.layout.fragment_about) {
         val pokemon = arguments?.getParcelable<Pokemon>("pokemon")
         binding?.apply {
             pokemon?.apply {
-                pokemonWeightTv.text = weight.toString().plus(getString(R.string.suffix_hm))
-                pokemonHeightTv.text = height.toString().plus(getString(R.string.suffix_dm))
+                pokemonWeightTv.text =  // in hectograms convert to kg
+                    getString(R.string.suffix_kg, weight?.div(10)?.toFloat())
+                pokemonHeightTv.text =  // in dm convert to cm
+                    getString(R.string.suffix_cm, height?.times(10)?.toFloat())
                 pokemonBaseXp.text = base_experience.toString()
             }
         }
