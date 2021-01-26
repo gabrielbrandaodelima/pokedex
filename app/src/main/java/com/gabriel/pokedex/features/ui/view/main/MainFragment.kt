@@ -1,6 +1,7 @@
 package com.gabriel.pokedex.features.ui.view.main
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.View
 import android.widget.SearchView
 import androidx.lifecycle.MutableLiveData
@@ -29,12 +30,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     private var pokemonAdapter: PokemonAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        pokesList = viewModel.getPokemonsList()
         setUpRecyclerView()
         observeViewModel()
         setSearchClickListener()
         setSwipeRefreshListener()
         if (viewModel.getPokemonsList().isNullOrEmpty())
             viewModel.fetchPokemonsList()
+
     }
 
     private fun setSwipeRefreshListener() {
@@ -81,7 +84,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
         binding.pokedexRecyclerView?.apply {
             setUpRecyclerView(requireContext(), {
-                pokemonAdapter = PokemonAdapter(arrayListOf(), ::handlePokemonClicked)
+                pokemonAdapter = PokemonAdapter(pokesList as ArrayList<Pokemon?>, ::handlePokemonClicked)
                 adapter = pokemonAdapter
             })
 
@@ -149,6 +152,22 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelable(
+            "recycler",
+            binding.pokedexRecyclerView.layoutManager?.onSaveInstanceState()
+        )
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        val recyclerStateBundle = savedInstanceState?.getParcelable<Parcelable>("recycler")
+        recyclerStateBundle?.let {
+            binding?.pokedexRecyclerView?.layoutManager?.onRestoreInstanceState(it)
+        }
+    }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let { viewModel.searchPokemonDetail(it) }
         return false
@@ -184,7 +203,10 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
     fun handleSuccessSearch(pokemon: Pokemon?) {
         pokemon?.let {
-            pokemonAdapter?.appendAll(arrayListOf(pokemon))
+            if (pokesList?.contains(it)?.not() == true)
+                pokesList?.toMutableList()?.add(it)
+            if (pokemonAdapter?.pokemonArray?.contains(it)?.not() == true)
+                pokemonAdapter?.appendAll(arrayListOf(pokemon))
             filter(it.name)
         }
     }
