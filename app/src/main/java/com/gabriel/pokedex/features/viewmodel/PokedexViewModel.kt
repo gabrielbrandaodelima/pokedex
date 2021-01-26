@@ -31,6 +31,9 @@ class PokedexViewModel(
     // offset= 20 page 1, 40 page 2, 60 page 3 ...
 
 
+    val _postPokeSuccess = MutableLiveData<Boolean>()
+    val postPokeSuccess: LiveData<Boolean> = _postPokeSuccess
+
     private val coroutinesContext = Dispatchers.IO
 
     fun fetchPokemonsList() {
@@ -85,6 +88,20 @@ class PokedexViewModel(
                         }
                     }
                     checkIfAllRequestsAreFinished()
+                }
+
+
+        }
+    }
+    fun postPokemon(pokemon: Pokemon) {
+
+        viewModelScope.launch(coroutinesContext) {
+            pokeApiUseCase.postPokemon(pokemon)
+                .catch { e ->
+                    handleFailure(e.message)
+                }
+                .collect {
+                    _postPokeSuccess.postValue(true)
                 }
 
 

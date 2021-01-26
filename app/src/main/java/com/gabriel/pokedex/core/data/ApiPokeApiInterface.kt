@@ -2,9 +2,7 @@ package com.gabriel.pokedex.core.data
 
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.domain.model.response.PokemonListingResponse
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 interface ApiPokeApiInterface {
@@ -18,5 +16,8 @@ interface ApiPokeApiInterface {
     suspend fun getPokemonDetail(
         @Path("id") id: String
     ): Pokemon
+
+    @POST("23328ac8-0cf2-49f7-9bb2-78d8f38bc9a6/")
+    suspend fun postPokemon(@Body pokemon: Pokemon): Void?
 
 }

@@ -20,10 +20,19 @@ class ApiPokeApi {
 
 
         var apiService = connectionRetrofit().create(ApiPokeApiInterface::class.java)
+        var postService = connectionPOSTRetrofit().create(ApiPokeApiInterface::class.java)
 
         private fun connectionRetrofit(): Retrofit {
             return Retrofit.Builder()
                 .baseUrl(BuildConfig.SERVER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(mClient)
+                .build()
+
+        }
+        private fun connectionPOSTRetrofit(): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl("https://webhook.site/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(mClient)
                 .build()

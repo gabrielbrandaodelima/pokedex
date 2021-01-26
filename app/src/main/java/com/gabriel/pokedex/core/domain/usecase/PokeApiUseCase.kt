@@ -17,5 +17,8 @@ class PokeApiUseCase (
     suspend fun getPokemonDetail(id: String): Flow<Pokemon?> {
         return repository.getPokemonDetail(id)
     }
+    suspend fun postPokemon(pokemon: Pokemon): Flow<Void?> {
+        return repository.postPokemon(pokemon)
+    }
 
 }

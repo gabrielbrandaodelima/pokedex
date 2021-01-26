@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface PokeApiRepository {
     suspend fun fetchPokemonsList(offset: Int): Flow<List<PokemonListing>?>
     suspend fun getPokemonDetail(id: String): Flow<Pokemon?>
+    suspend fun postPokemon(pokemon: Pokemon): Flow<Void?>
 }
 
 class PokeApiRepositoryImp (
@@ -20,6 +21,10 @@ class PokeApiRepositoryImp (
     }
     override suspend fun getPokemonDetail(id: String): Flow<Pokemon?> {
         return remote.getPokemonDetail(id)
+    }
+
+    override suspend fun postPokemon(pokemon: Pokemon): Flow<Void?> {
+        return remote.postPokemon(pokemon)
     }
 
 }

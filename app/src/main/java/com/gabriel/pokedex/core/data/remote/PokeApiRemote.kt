@@ -31,4 +31,16 @@ class PokeApiRemote {
             }
         }
     }
+
+    fun postPokemon(pokemon: Pokemon): Flow<Void?> {
+        return flow {
+            try {
+                ApiPokeApi.postService.postPokemon(pokemon)
+                emit(null)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                emit(null)
+            }
+        }
+    }
 }

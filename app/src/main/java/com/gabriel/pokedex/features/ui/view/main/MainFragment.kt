@@ -19,11 +19,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
 
 
     private val binding by viewBinding(FragmentMainBinding::bind)
-    val viewModel: PokedexViewModel by viewModel()
 
     private var needsLoading = MutableLiveData(false)
     private var pokesList: List<Pokemon>? = null
 
+    val viewModel: PokedexViewModel by viewModel()
     private var pokemonAdapter: PokemonAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
