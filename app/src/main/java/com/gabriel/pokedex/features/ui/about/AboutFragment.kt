@@ -24,7 +24,11 @@ class AboutFragment : BaseFragment(R.layout.fragment_about) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val pokemon = arguments?.getParcelable<Pokemon>("pokemon")
-        binding?.apply {
+        setPokemonAboutInformation(pokemon)
+    }
+
+    private fun setPokemonAboutInformation(pokemon: Pokemon?) {
+        binding.apply {
             pokemon?.apply {
                 pokemonWeightTv.text =  // in hectograms convert to kg
                     getString(R.string.suffix_kg, weight?.div(10)?.toFloat())
