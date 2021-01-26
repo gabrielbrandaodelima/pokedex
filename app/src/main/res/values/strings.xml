@@ -22,4 +22,5 @@
     <string name="suffix_kg">%.2f kg</string>
     <string name="title_hp">HP</string>
     <string name="text_pokemon_saved">Saved Pokemon as Favorite! </string>
+    <string name="main_search">Search Pokemon Name or id</string>
 </resources>

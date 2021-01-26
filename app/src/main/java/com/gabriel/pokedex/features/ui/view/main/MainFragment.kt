@@ -3,6 +3,7 @@ package com.gabriel.pokedex.features.ui.view.main
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.gabriel.pokedex.R
@@ -15,7 +16,7 @@ import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : BaseFragment(R.layout.fragment_main) {
+class MainFragment : Fragment(R.layout.fragment_main) {
 
 
     private val binding by viewBinding(FragmentMainBinding::bind)
@@ -66,7 +67,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
             observe(loading, {
                 it?.let { it1 -> manageProgress(it1) }
             })
-            failure(failure, ::handleFailure)
+//            failure(failure, ::handleFailure)
         }
         viewModel.fetchPokemonsList()
     }
