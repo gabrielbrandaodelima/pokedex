@@ -20,4 +20,6 @@
     <string name="title_base_xp">Base EXP</string>
     <string name="suffix_cm">%.2f cm</string>
     <string name="suffix_kg">%.2f kg</string>
+    <string name="title_hp">HP</string>
+    <string name="text_pokemon_saved">Saved Pokemon as Favorite! </string>
 </resources>
