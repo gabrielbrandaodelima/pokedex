@@ -40,6 +40,11 @@ class PokemonAdapter(
 
     internal fun appendAll(pokesList: ArrayList<Pokemon>) {
         val startindex = pokemonArray.size
+        pokesList.forEach {
+            if (pokemonArray.contains(it)) {
+                pokemonArray.remove(it)
+            }
+        }
         pokemonArray.addAll(startindex, pokesList)
         notifyItemRangeInserted(startindex, pokesList.size)
     }

@@ -105,6 +105,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         viewModel.apply {
 //            observe(pokesList, ::handleSuccessPokemonsList)
             observe(pokesDetailList, ::handleSuccessPokemonsList)
+            observe(pokemonSearched, ::handleSuccessSearch)
             observe(pageLoading, {
                 it?.let { it1 -> managePageProgress(it1) }
             })
@@ -161,7 +162,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        filter(query)
+        query?.let { viewModel.searchPokemonDetail(it) }
         return false
     }
 
@@ -187,5 +188,13 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     private fun resetAdapter() {
         pokemonAdapter?.addAll(pokesList as ArrayList<Pokemon>)
     }
+
+    fun handleSuccessSearch(pokemon: Pokemon?) {
+        pokemon?.let {
+            pokemonAdapter?.appendAll(arrayListOf(pokemon))
+            filter(it.name)
+        }
+    }
+
 
 }
