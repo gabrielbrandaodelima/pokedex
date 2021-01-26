@@ -186,7 +186,9 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         return false
     }
 
+    var querySearch = String.empty()
     private fun filter(query: String?) {
+        querySearch = query?:String.empty()
         if (query != null && query.isNotEmpty()) {
             val filtered =
                 pokemonAdapter?.pokemonArray?.filter {
@@ -213,7 +215,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
                 pokesList?.toMutableList()?.add(it)
             if (pokemonAdapter?.pokemonArray?.contains(it)?.not() == true)
                 pokemonAdapter?.appendAll(arrayListOf(pokemon))
-            filter(it.name)
+            filter(querySearch)
         }
         binding.pokemonNotFoundFrameLayout.visibility(pokemon == null)
     }
