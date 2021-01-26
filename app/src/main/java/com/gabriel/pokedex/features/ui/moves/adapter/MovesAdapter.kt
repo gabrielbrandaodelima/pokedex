@@ -13,7 +13,8 @@ class MovesAdapter(val list: List<Move>?) : RecyclerView.Adapter<MovesAdapter.It
         return ItemViewHolder(binding)
     }
 
-    class ItemViewHolder(val binding: LayoutItemMovesBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ItemViewHolder(val binding: LayoutItemMovesBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(move: Move?) {
             binding.itemMoveName.text = move?.move?.name
@@ -27,7 +28,7 @@ class MovesAdapter(val list: List<Move>?) : RecyclerView.Adapter<MovesAdapter.It
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return list?.size ?: 0
     }
 
 }
