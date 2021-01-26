@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gabriel.pokedex.core.domain.model.response.Move
+import com.gabriel.pokedex.core.extensions.capitalizeWords
 import com.gabriel.pokedex.databinding.LayoutItemMovesBinding
 
 class MovesAdapter(val list: List<Move>?) : RecyclerView.Adapter<MovesAdapter.ItemViewHolder>() {
@@ -17,7 +18,7 @@ class MovesAdapter(val list: List<Move>?) : RecyclerView.Adapter<MovesAdapter.It
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(move: Move?) {
-            binding.itemMoveName.text = move?.move?.name
+            binding.itemMoveName.text = move?.move?.name?.capitalizeWords()
         }
 
     }
