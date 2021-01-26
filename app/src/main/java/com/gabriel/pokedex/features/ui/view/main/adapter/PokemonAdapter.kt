@@ -13,7 +13,7 @@ import com.gabriel.pokedex.databinding.ItemPokemonBinding
 import com.gabriel.pokedex.features.util.PokemonColorUtil
 
 class PokemonAdapter(
-    private var pokemonArray: ArrayList<Pokemon?>,
+    var pokemonArray: ArrayList<Pokemon?>,
     private var clickCallback: (Pokemon?) -> Unit
 ) : RecyclerView.Adapter<PokemonAdapter.ViewHolder>() {
 
@@ -32,7 +32,7 @@ class PokemonAdapter(
         return pokemonArray.size
     }
 
-    internal fun addAll(list: ArrayList<Pokemon>) {
+    internal fun addAll(list: ArrayList<Pokemon>, filtered: Boolean = false , query: String? = null) {
         pokemonArray = arrayListOf()
         pokemonArray.addAll(list)
         notifyDataSetChanged()

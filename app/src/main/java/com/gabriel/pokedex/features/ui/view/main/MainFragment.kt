@@ -34,7 +34,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         setUpRecyclerView()
         initViewModel()
         setSearchClickListener()
+        setSwipeRefreshListener()
 
+    }
+
+    private fun setSwipeRefreshListener() {
+        binding.pokeSwipeRefreshLayout?.setOnRefreshListener {
+            viewModel.fetchPokemonsList(true)
+        }
     }
 
     private fun setSearchClickListener() {
@@ -122,13 +129,14 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
 
     private fun manageProgress(loading: Boolean) {
-        if (loading) {
-            binding.pokedexRecyclerView.gone()
-            binding.recyclerProgress.visible()
-        } else {
-            binding.pokedexRecyclerView.visible()
-            binding.recyclerProgress.gone()
-        }
+        if (binding.pokeSwipeRefreshLayout.isRefreshing.not())
+            if (loading) {
+                binding.pokedexRecyclerView.gone()
+                binding.recyclerProgress.visible()
+            } else {
+                binding.pokedexRecyclerView.visible()
+                binding.recyclerProgress.gone()
+            }
 
     }
 
@@ -138,6 +146,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
     private fun handleSuccessPokemonsList(pair: Pair<List<Pokemon>?, Int>?) {
         needsLoading.postValue(true)
+        binding.pokeSwipeRefreshLayout.isRefreshing = false
+
         val list = pair?.first
         val page = pair?.second
         if (page == 20) {
@@ -150,18 +160,32 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         }
     }
 
-    override fun onQueryTextSubmit(p0: String?): Boolean {
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        filter(query)
         return false
     }
 
-    override fun onQueryTextChange(p0: String?): Boolean {
+    override fun onQueryTextChange(newText: String?): Boolean {
+        filter(newText)
         return false
     }
 
     override fun onClose(): Boolean {
         hideSearchView()
+        resetAdapter()
         return true
     }
 
+    private fun filter(query: String?) {
+        if (query != null && query.isNotEmpty()) {
+            val filtered = pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
+            pokemonAdapter?.addAll(filtered as ArrayList<Pokemon>)
+        } else
+            resetAdapter()
+    }
+
+    private fun resetAdapter() {
+        pokemonAdapter?.addAll(pokesList as ArrayList<Pokemon>)
+    }
 
 }

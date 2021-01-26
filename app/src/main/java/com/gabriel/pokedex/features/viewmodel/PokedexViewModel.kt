@@ -19,8 +19,8 @@ class PokedexViewModel(
 
     private val _pokesList = MutableLiveData<Pair<List<PokemonListing>?, Int>>()
     val pokesList: LiveData<Pair<List<PokemonListing>?, Int>> = _pokesList
-    val _pokesDetailList = MutableLiveData<Pair<ArrayList<Pokemon>,Int>>()
-    val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>,Int>> = _pokesDetailList
+    val _pokesDetailList = MutableLiveData<Pair<ArrayList<Pokemon>, Int>>()
+    val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>, Int>> = _pokesDetailList
     private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
     private val pokemonPagingArray: ArrayList<Pokemon> = arrayListOf()
     private val errorIds = arrayListOf<String>()
@@ -36,7 +36,10 @@ class PokedexViewModel(
 
     private val coroutinesContext = Dispatchers.IO
 
-    fun fetchPokemonsList() {
+    fun fetchPokemonsList(refresh: Boolean = false) {
+        if (refresh) {
+            offset = PAGE_1
+        }
         pokemonPagingArray.clear()
         errorIds.clear()
         when (offset) {
@@ -93,6 +96,7 @@ class PokedexViewModel(
 
         }
     }
+
     fun postPokemon(pokemon: Pokemon) {
 
         viewModelScope.launch(coroutinesContext) {

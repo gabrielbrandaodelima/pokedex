@@ -89,8 +89,11 @@
                             android:layout_height="match_parent"
                             app:queryHint="@string/main_search"
                             app:defaultQueryHint="@string/main_search"
+                            app:queryBackground="@drawable/background_search_bar"
                             android:layout_margin="10dp"
-                            android:visibility="gone"/>
+                            android:visibility="gone">
+
+                        </androidx.appcompat.widget.SearchView>
                         <ImageView
                             android:id="@+id/search_imgview"
                             android:layout_width="24dp"
@@ -118,6 +121,11 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/poke_swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/pokedex_recycler_view"
             android:layout_width="match_parent"
@@ -131,6 +139,8 @@
             tools:itemCount="20"
             tools:listitem="@layout/item_pokemon"
             tools:spanCount="2" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
     <ProgressBar
         android:layout_gravity="center"
