@@ -83,14 +83,26 @@
                         android:background="@drawable/background_search_bar"
                         android:orientation="horizontal">
 
+                        <androidx.appcompat.widget.SearchView
+                            android:id="@+id/search_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:queryHint="@string/main_search"
+                            app:defaultQueryHint="@string/main_search"
+                            android:layout_margin="10dp"
+                            android:visibility="gone"/>
                         <ImageView
+                            android:id="@+id/search_imgview"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_marginStart="16dp"
+                            android:visibility="visible"
                             android:src="@drawable/search" />
 
                         <TextView
+                            android:id="@+id/search_txtview"
                             android:layout_width="match_parent"
+                            android:visibility="visible"
                             android:layout_height="wrap_content"
                             android:layout_margin="16dp"
                             android:textSize="16sp"
