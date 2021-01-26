@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.features.ui.adapter
+package com.gabriel.pokedex.features.ui.view.main.adapter
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter

@@ -1,19 +1,16 @@
-package com.gabriel.pokedex.features.ui.view
+package com.gabriel.pokedex.features.ui.view.main
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.gabriel.pokedex.R
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
-import com.gabriel.pokedex.core.domain.model.response.PokemonListing
 import com.gabriel.pokedex.core.extensions.*
 import com.gabriel.pokedex.core.platform.BaseFragment
 import com.gabriel.pokedex.databinding.FragmentMainBinding
-import com.gabriel.pokedex.features.ui.adapter.PokemonAdapter
+import com.gabriel.pokedex.features.ui.view.main.adapter.PokemonAdapter
 import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 
 import org.koin.androidx.viewmodel.ext.android.viewModel

@@ -15,7 +15,7 @@ fun RecyclerView?.setUpRecyclerView(
         setHasFixedSize(true)
         setItemViewCacheSize(20)
         context?.let {
-            layoutManager = GridLayoutManager((it), 2, orientation, false)
+            layoutManager = GridLayoutManager((it), 1, orientation, false)
         }
 
         adapterSetCallback(this)
@@ -39,7 +39,7 @@ fun RecyclerView?.setUpPaging(
                         needsLoading.value?.let { load ->
                             if (load) {
                                 if (visItemCount + pastItemCount >= totItemCount) {
-                                    needsLoading.value = false
+                                    needsLoading.postValue(false)
                                     refreshList()
                                 }
                             }

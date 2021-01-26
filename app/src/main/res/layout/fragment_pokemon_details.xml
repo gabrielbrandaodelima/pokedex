@@ -130,7 +130,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@drawable/rounded_top_border"
                 android:orientation="vertical">
 
                 <com.google.android.material.tabs.TabLayout
@@ -139,6 +138,7 @@
                     android:layout_height="?attr/actionBarSize"
                     app:tabGravity="fill"
                     app:tabMode="fixed"
+                    android:background="@drawable/rounded_top_border"
                     app:tabSelectedTextColor="@color/red"
                     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                     app:tabTextColor="@color/black">
@@ -146,8 +146,18 @@
                     <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                         />
+                        tools:text="About" />
 
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Base Stats" />
+
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Moves" />
 
 
                 </com.google.android.material.tabs.TabLayout>
@@ -165,7 +175,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
+            android:id="@+id/pokemon_view_pager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/backgroundLight" />

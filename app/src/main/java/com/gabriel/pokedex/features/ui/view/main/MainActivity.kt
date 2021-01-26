@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.features.ui.view
+package com.gabriel.pokedex.features.ui.view.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
