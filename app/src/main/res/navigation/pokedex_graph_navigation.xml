@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.gabriel.pokedex.features.ui.view.main.MainFragment"
+        android:name="com.gabriel.pokedex.features.ui.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main"/>
     <fragment
         android:id="@+id/pokemonDetailsFragment"
-        android:name="com.gabriel.pokedex.features.ui.view.details.PokemonDetailsFragment"
+        android:name="com.gabriel.pokedex.features.ui.details.PokemonDetailsFragment"
         android:label="PokemonDetailsFragment"
         tools:layout="@layout/fragment_pokemon_details"/>
 </navigation>

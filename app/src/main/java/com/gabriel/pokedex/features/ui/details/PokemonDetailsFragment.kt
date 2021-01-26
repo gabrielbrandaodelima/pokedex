@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.features.ui.view.details
+package com.gabriel.pokedex.features.ui.details
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -10,7 +10,7 @@ import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.extensions.*
 import com.gabriel.pokedex.core.platform.BaseFragment
 import com.gabriel.pokedex.databinding.FragmentPokemonDetailsBinding
-import com.gabriel.pokedex.features.ui.view.details.adapter.PokemonDetailsViewPagerAdapter
+import com.gabriel.pokedex.features.ui.details.adapter.PokemonDetailsViewPagerAdapter
 import com.gabriel.pokedex.features.util.PokemonColorUtil
 import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel

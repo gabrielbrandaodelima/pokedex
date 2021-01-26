@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.features.ui.view.details.adapter
+package com.gabriel.pokedex.features.ui.details.adapter
 
 import android.content.Context
 import androidx.fragment.app.Fragment

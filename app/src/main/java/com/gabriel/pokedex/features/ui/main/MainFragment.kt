@@ -1,4 +1,4 @@
-package com.gabriel.pokedex.features.ui.view.main
+package com.gabriel.pokedex.features.ui.main
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -12,7 +12,7 @@ import com.gabriel.pokedex.core.domain.model.response.Pokemon
 import com.gabriel.pokedex.core.extensions.*
 import com.gabriel.pokedex.core.platform.BaseFragment
 import com.gabriel.pokedex.databinding.FragmentMainBinding
-import com.gabriel.pokedex.features.ui.view.main.adapter.PokemonAdapter
+import com.gabriel.pokedex.features.ui.main.adapter.PokemonAdapter
 import com.gabriel.pokedex.features.viewmodel.PokedexViewModel
 
 import org.koin.androidx.viewmodel.ext.android.viewModel
