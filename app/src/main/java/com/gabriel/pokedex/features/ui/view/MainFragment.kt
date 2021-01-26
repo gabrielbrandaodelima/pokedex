@@ -1,7 +1,9 @@
 package com.gabriel.pokedex.features.ui.view
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
@@ -22,7 +24,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main) {
     private val binding by viewBinding(FragmentMainBinding::bind)
     val viewModel: PokedexViewModel by viewModel()
 
-    private var needsLoading = MutableLiveData(true)
+    private var needsLoading = MutableLiveData(false)
     private var pokesList: List<Pokemon>? = null
 
     private var pokemonAdapter: PokemonAdapter? = null

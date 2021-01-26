@@ -22,6 +22,8 @@ class PokedexViewModel(
     val _pokesDetailList = MutableLiveData<Pair<ArrayList<Pokemon>,Int>>()
     val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>,Int>> = _pokesDetailList
     private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
+    private val pokemonPagingArray: ArrayList<Pokemon> = arrayListOf()
+    private val errorIds = arrayListOf<String>()
     private val _pokemon = MutableLiveData<Pokemon>()
     private val pokemon: LiveData<Pokemon> = _pokemon
     private val PAGE_1 = 20 // Handles paging,
@@ -32,6 +34,8 @@ class PokedexViewModel(
     private val coroutinesContext = Dispatchers.IO
 
     fun fetchPokemonsList() {
+        pokemonPagingArray.clear()
+        errorIds.clear()
         when (offset) {
             PAGE_1 -> _loading.postValue(true)
             else -> _pageLoading.postValue(true)
@@ -47,7 +51,7 @@ class PokedexViewModel(
                 }
                 .collect { pokes ->
                     handlePokemonsListAndGetPokemonsDetails(pokes)
-                    _pokesList.postValue(Pair(pokes, offset))
+//                    _pokesList.postValue(Pair(pokes, offset))
                 }
         }
     }
@@ -62,7 +66,6 @@ class PokedexViewModel(
         }
     }
 
-    private val errorIds = arrayListOf<String>()
     fun getPokemonDetail(id: String) {
 
         viewModelScope.launch(coroutinesContext) {
@@ -77,6 +80,9 @@ class PokedexViewModel(
                         if (pokemonArray.contains(it).not()) {
                             pokemonArray.add(it)
                         }
+                        if (pokemonPagingArray.contains(it).not()) {
+                            pokemonPagingArray.add(it)
+                        }
                     }
                     checkIfAllRequestsAreFinished()
                 }
@@ -87,14 +93,20 @@ class PokedexViewModel(
 
     private fun checkIfAllRequestsAreFinished() {
         val errorCallbacks = errorIds.size
-        val successCallbacks = pokemonArray.size
+        val successCallbacks = pokemonPagingArray.size
         val totalCallbacks = errorCallbacks + successCallbacks
-        val totalPokemonListing = _pokesList.value?.first?.size
+        val totalPokemonListing = offset
         if (totalCallbacks == totalPokemonListing) {
-            _pokesDetailList.postValue(Pair(pokemonArray, offset))
+
             when (offset) {
-                PAGE_1 -> _loading.postValue(false)
-                else -> _pageLoading.postValue(false)
+                PAGE_1 -> {
+                    _pokesDetailList.postValue(Pair(pokemonArray, offset))
+                    _loading.postValue(false)
+                }
+                else -> {
+                    _pokesDetailList.postValue(Pair(pokemonPagingArray, offset))
+                    _pageLoading.postValue(false)
+                }
             }
             offset += 20
         }
