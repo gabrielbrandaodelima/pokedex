@@ -20,7 +20,7 @@ class StatsFragment : BaseFragment(R.layout.fragment_stats) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val pokemon = arguments?.getString("pokemon")
+        val pokemon = arguments?.getParcelable<Pokemon>("pokemon")
         pokemon?.apply {
 //
             }

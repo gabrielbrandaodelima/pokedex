@@ -95,8 +95,8 @@ class PokedexViewModel(
         val errorCallbacks = errorIds.size
         val successCallbacks = pokemonPagingArray.size
         val totalCallbacks = errorCallbacks + successCallbacks
-        val totalPokemonListing = offset
-        if (totalCallbacks == totalPokemonListing) {
+        val totalPokemonPageListing = 20
+        if (totalCallbacks == totalPokemonPageListing) {
 
             when (offset) {
                 PAGE_1 -> {
