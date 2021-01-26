@@ -39,7 +39,7 @@
 
 # Project Approach
 
-I tried to follow MVVM design patterns by using clean code and clean architecture principles. 
+I tried to follow MVVM design patterns by using clean code and clean architecture principles. [Articles](https://github.com/gabrielbrandaodelima/pokedex/blob/master/README.md#thanks)
 
 Since PokeAPI's pokémons listing endpoint, just gives us it's name and respective details url, I had to retrieve pokemons image on it's callback, making other HTTP requests.
 
