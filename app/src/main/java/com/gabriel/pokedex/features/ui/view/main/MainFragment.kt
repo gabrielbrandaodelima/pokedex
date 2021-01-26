@@ -141,7 +141,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         val page = pair?.second
         if (page == 20) {
             pokesList = list
-            pokemonAdapter?.addAll(list as ArrayList<Pokemon>)
+            pokemonAdapter?.addAll(list as ArrayList<Pokemon?>)
         } else {
 
             list?.toMutableList()?.let { pokesList?.toMutableList()?.addAll(it) }
@@ -169,13 +169,17 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
         if (query != null && query.isNotEmpty()) {
             val filtered =
                 pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
-            pokemonAdapter?.addAll(filtered as ArrayList<Pokemon>)
+            (filtered as? ArrayList<Pokemon?>)?.let {
+                pokemonAdapter?.addAll(it)
+            }
         } else
             resetAdapter()
     }
 
     private fun resetAdapter() {
-        pokemonAdapter?.addAll(pokesList as ArrayList<Pokemon>)
+        (pokesList as? ArrayList<Pokemon?>)?.let {
+            pokemonAdapter?.addAll(it)
+        }
     }
 
     fun handleSuccessSearch(pokemon: Pokemon?) {

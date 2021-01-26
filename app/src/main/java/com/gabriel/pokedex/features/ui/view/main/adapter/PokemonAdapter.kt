@@ -32,7 +32,7 @@ class PokemonAdapter(
         return pokemonArray.size
     }
 
-    internal fun addAll(list: ArrayList<Pokemon>, filtered: Boolean = false , query: String? = null) {
+    internal fun addAll(list: ArrayList<Pokemon?>, filtered: Boolean = false , query: String? = null) {
         pokemonArray = arrayListOf()
         pokemonArray.addAll(list)
         notifyDataSetChanged()
