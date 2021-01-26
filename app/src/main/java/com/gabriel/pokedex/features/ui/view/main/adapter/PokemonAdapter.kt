@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gabriel.pokedex.R
 import com.gabriel.pokedex.core.domain.model.response.Pokemon
+import com.gabriel.pokedex.core.extensions.empty
+import com.gabriel.pokedex.core.extensions.getSpannableMatchCase
 import com.gabriel.pokedex.core.extensions.loadFromUrl
 import com.gabriel.pokedex.core.extensions.visible
 import com.gabriel.pokedex.databinding.ItemPokemonBinding
@@ -23,6 +25,7 @@ class PokemonAdapter(
         return ViewHolder(binding)
     }
 
+    var querySearchText = String.empty()
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = pokemonArray[position]
         holder.bindView(item, clickCallback)
@@ -32,7 +35,8 @@ class PokemonAdapter(
         return pokemonArray.size
     }
 
-    internal fun addAll(list: ArrayList<Pokemon?>, filtered: Boolean = false , query: String? = null) {
+    internal fun addAll(list: ArrayList<Pokemon?>, query: String? = null) {
+        querySearchText = query ?: String.empty()
         pokemonArray = arrayListOf()
         pokemonArray.addAll(list)
         notifyDataSetChanged()
@@ -49,7 +53,7 @@ class PokemonAdapter(
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: ItemPokemonBinding) :
+    inner class ViewHolder(itemView: ItemPokemonBinding) :
         RecyclerView.ViewHolder(itemView.root) {
 
         private val view: ItemPokemonBinding = itemView
@@ -65,7 +69,14 @@ class PokemonAdapter(
                         itemPokemonFrameLayout.background.colorFilter =
                             PorterDuffColorFilter(color, PorterDuff.Mode.SRC_ATOP)
 
-                        itemPokeNameTv.text = pokemon.name?.capitalize()
+
+                        itemPokeNameTv.text = when {
+                            querySearchText.isBlank() -> pokemon.name?.capitalize()
+                            else -> pokemon.name?.capitalize()
+                                .getSpannableMatchCase(itemView.context, querySearchText, true)
+                        }
+
+
                         itemPokeImageView.loadFromUrl(pokemon?.sprites?.other?.official_artwork?.front_default)
                         itemPokeIdTv.text = itemView.context.getString(
                             R.string.text_id_pokemon,
