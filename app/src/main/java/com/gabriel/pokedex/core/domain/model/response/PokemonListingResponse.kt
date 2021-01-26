@@ -6,7 +6,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class PokemonListingResponse(
-    @SerializedName("results") val results: List<PokemonListing>? = null
+    @SerializedName("results") val results: List<PokemonListing>? = null,
+    @SerializedName("next") val next: String? = null
 ) : Parcelable
 
 @Parcelize
