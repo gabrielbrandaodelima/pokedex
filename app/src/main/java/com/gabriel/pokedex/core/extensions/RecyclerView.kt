@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 fun RecyclerView?.setUpRecyclerView(
         context: Context?,
         adapterSetCallback: (adapter: RecyclerView) -> Unit,
+        spanCount:Int = 2,
         orientation: Int = RecyclerView.VERTICAL
 ) {
     this?.apply {
         setHasFixedSize(true)
         setItemViewCacheSize(20)
         context?.let {
-            layoutManager = GridLayoutManager((it), 1, orientation, false)
+            layoutManager = GridLayoutManager((it), spanCount, orientation, false)
         }
 
         adapterSetCallback(this)

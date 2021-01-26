@@ -38,7 +38,7 @@ class StatsFragment : BaseFragment(R.layout.fragment_stats) {
                     setUpRecyclerView(requireContext(),{
 
                         it.adapter = StatsAdapter(stats)
-                    })
+                    },1)
                 }
             }
         }
