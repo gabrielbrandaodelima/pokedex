@@ -153,14 +153,13 @@ class PokedexViewModel(
 
             when (offset) {
                 PAGE_SIZE -> {
-                    _pokesDetailList.postValue(Pair(pokemonArray, offset))
                     _loading.postValue(false)
                 }
                 else -> {
-                    _pokesDetailList.postValue(Pair(pokemonPagingArray, offset))
                     _pageLoading.postValue(false)
                 }
             }
+            _pokesDetailList.postValue(Pair(pokemonPagingArray, offset))
             needsLoading.postValue(true)
             offset = nextPageOffset.toInt()
         }
