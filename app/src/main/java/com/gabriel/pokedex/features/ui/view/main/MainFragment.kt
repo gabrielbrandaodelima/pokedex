@@ -3,8 +3,6 @@ package com.gabriel.pokedex.features.ui.view.main
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.gabriel.pokedex.R
@@ -32,10 +30,11 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
-        initViewModel()
+        observeViewModel()
         setSearchClickListener()
         setSwipeRefreshListener()
-
+        if (viewModel.getPokemonsList().isNullOrEmpty())
+            viewModel.fetchPokemonsList()
     }
 
     private fun setSwipeRefreshListener() {
@@ -101,7 +100,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
     }
 
-    private fun initViewModel() {
+    private fun observeViewModel() {
         viewModel.apply {
 //            observe(pokesList, ::handleSuccessPokemonsList)
             observe(pokesDetailList, ::handleSuccessPokemonsList)
@@ -114,18 +113,7 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
             })
             failure(failure, ::handleFailure)
         }
-        viewModel.fetchPokemonsList()
-    }
 
-    var count = 0
-    private fun loadPokemonImagesInList(arrayList: java.util.ArrayList<Pokemon>?) {
-        Toast.makeText(
-            requireContext(),
-            "finished: ${arrayList?.size} - ${count++} ",
-            Toast.LENGTH_LONG
-        ).show()
-//        if (arrayList?.size ?: 0 > 0)
-//            pokemonAdapter?.loadPokemonsInfo(arrayList)
     }
 
 
@@ -179,7 +167,8 @@ class MainFragment : BaseFragment(R.layout.fragment_main), SearchView.OnQueryTex
 
     private fun filter(query: String?) {
         if (query != null && query.isNotEmpty()) {
-            val filtered = pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
+            val filtered =
+                pokemonAdapter?.pokemonArray?.filter { it?.name?.contains(query) == true }
             pokemonAdapter?.addAll(filtered as ArrayList<Pokemon>)
         } else
             resetAdapter()

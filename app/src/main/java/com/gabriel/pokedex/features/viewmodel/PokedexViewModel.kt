@@ -8,6 +8,7 @@ import com.gabriel.pokedex.core.domain.model.response.PokemonListing
 import com.gabriel.pokedex.core.domain.usecase.PokeApiUseCase
 import com.gabriel.pokedex.core.extensions.empty
 import com.gabriel.pokedex.core.platform.BaseViewModel
+import com.gabriel.pokedex.core.platform.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -17,25 +18,28 @@ class PokedexViewModel(
     private val pokeApiUseCase: PokeApiUseCase
 ) : BaseViewModel() {
 
-    private val _pokesList = MutableLiveData<Pair<List<PokemonListing>?, Int>>()
+    private val _pokesList = SingleLiveEvent<Pair<List<PokemonListing>?, Int>>()
     val pokesList: LiveData<Pair<List<PokemonListing>?, Int>> = _pokesList
-    val _pokesDetailList = MutableLiveData<Pair<ArrayList<Pokemon>, Int>>()
+    val _pokesDetailList = SingleLiveEvent<Pair<ArrayList<Pokemon>, Int>>()
     val pokesDetailList: LiveData<Pair<ArrayList<Pokemon>, Int>> = _pokesDetailList
     private val pokemonArray: ArrayList<Pokemon> = arrayListOf()
     private val pokemonPagingArray: ArrayList<Pokemon> = arrayListOf()
     private val errorIds = arrayListOf<String>()
-    private val _pokemonSearched = MutableLiveData<Pokemon>()
+    private val _pokemonSearched = SingleLiveEvent<Pokemon>()
     val pokemonSearched: LiveData<Pokemon> = _pokemonSearched
     private val PAGE_1 = 20 // Handles paging,
     private var offset: Int = PAGE_1 // Handles paging,
     // offset= 20 page 1, 40 page 2, 60 page 3 ...
 
 
-    val _postPokeSuccess = MutableLiveData<Boolean>()
+    val _postPokeSuccess = SingleLiveEvent<Boolean>()
     val postPokeSuccess: LiveData<Boolean> = _postPokeSuccess
 
     private val coroutinesContext = Dispatchers.IO
 
+    fun getPokemonsList(): ArrayList<Pokemon> {
+        return pokemonArray
+    }
     fun fetchPokemonsList(refresh: Boolean = false) {
         if (refresh) {
             offset = PAGE_1
@@ -50,7 +54,7 @@ class PokedexViewModel(
         viewModelScope.launch(coroutinesContext) {
             pokeApiUseCase.fetchPokemonsList(offset)
                 .catch { e ->
-                    handleFailure(e.message)
+                    handleFailure(e.toString())
                     when (offset) {
                         PAGE_1 -> _loading.postValue(false)
                         else -> _pageLoading.postValue(false)
@@ -78,7 +82,7 @@ class PokedexViewModel(
         viewModelScope.launch(coroutinesContext) {
             pokeApiUseCase.getPokemonDetail(id)
                 .catch { e ->
-                    handleFailure(e.message)
+                    handleFailure(e.toString())
                     errorIds.add(id)
                     checkIfAllRequestsAreFinished()
                 }
@@ -103,7 +107,7 @@ class PokedexViewModel(
         viewModelScope.launch(coroutinesContext) {
             pokeApiUseCase.getPokemonDetail(id)
                 .catch { e ->
-                    handleFailure(e.message)
+                    handleFailure(e.toString())
                     _loading.postValue(false)
                 }
                 .collect { poke ->
@@ -123,7 +127,7 @@ class PokedexViewModel(
         viewModelScope.launch(coroutinesContext) {
             pokeApiUseCase.postPokemon(pokemon)
                 .catch { e ->
-                    handleFailure(e.message)
+                    handleFailure(e.toString())
                 }
                 .collect {
                     _postPokeSuccess.postValue(true)
