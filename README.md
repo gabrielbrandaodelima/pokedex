@@ -69,3 +69,6 @@ For searching, I made use of Kotlin extension functions for filtering local data
 * Kotlin clean architecture articles:
   * https://proandroiddev.com/kotlin-clean-architecture-1ad42fcd97fa
   * https://antonioleiva.com/clean-architecture-android/
+  * https://fernandocejas.com/blog/engineering/2019-05-08-architecting-android-reloaded/
+  * https://fernandocejas.com/blog/engineering/2015-07-18-architecting-android-the-evolution/
+  * https://fernandocejas.com/blog/engineering/2014-09-03-architecting-android-the-clean-way/
