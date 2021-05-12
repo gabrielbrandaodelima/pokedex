@@ -17,35 +17,3 @@ data class Pokemon(
     @SerializedName("moves") val moves: List<Move>? = null
 ) : Parcelable
 
-@Parcelize
-data class Move(
-    @SerializedName("move") val move: BaseResponse? = null
-) : Parcelable
-
-@Parcelize
-data class Stats(
-    @SerializedName("base_stat") val base_stat: Int? = null,
-    @SerializedName("effort") val effort: Int? = null,
-    @SerializedName("stat") val stat: BaseResponse? = null
-) : Parcelable
-
-@Parcelize
-data class PokeTypes(
-    @SerializedName("type") val type: BaseResponse? = null
-) : Parcelable
-
-@Parcelize
-data class Sprites(
-    @SerializedName("front_default") val front_default: String? = null,
-    @SerializedName("other") val other: OtherSprite? = null
-) : Parcelable
-
-@Parcelize
-data class OtherSprite(
-    @SerializedName("official-artwork") val official_artwork: OfficialArtwork? = null
-) : Parcelable
-
-@Parcelize
-data class OfficialArtwork(
-    @SerializedName("front_default") val front_default: String? = null
-) : Parcelable

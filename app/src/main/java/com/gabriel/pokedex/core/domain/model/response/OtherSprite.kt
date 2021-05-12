@@ -5,8 +5,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class PokemonListingResponse(
-    @SerializedName("results") val results: List<PokemonListing>? = null,
-    @SerializedName("next") val next: String? = null
+data class OtherSprite(
+    @SerializedName("official-artwork") val official_artwork: OfficialArtwork? = null
 ) : Parcelable
-
