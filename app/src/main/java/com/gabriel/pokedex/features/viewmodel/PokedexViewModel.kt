@@ -137,7 +137,14 @@ class PokedexViewModel(
                     _postPokeSuccess.postValue(false)
                 }
                 .collect {
-                    _postPokeSuccess.postValue(true)
+                    it?.let {
+
+                        _postPokeSuccess.postValue(it)
+                    }?: kotlin.run {
+                        handleFailure("error")
+                        _postPokeSuccess.postValue(false)
+
+                    }
                 }
 
 

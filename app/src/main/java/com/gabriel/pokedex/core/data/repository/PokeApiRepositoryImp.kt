@@ -16,7 +16,7 @@ class PokeApiRepositoryImp (
         return remote.getPokemonDetail(id)
     }
 
-    override suspend fun postPokemon(pokemon: Pokemon): Flow<Void?> {
+    override suspend fun postPokemon(pokemon: Pokemon): Flow<Boolean?> {
         return remote.postPokemon(pokemon)
     }
 
