@@ -20,7 +20,7 @@ class ApiPokeApi {
 
 
         var apiService = connectionRetrofit().create(ApiPokeApiInterface::class.java)
-        var postService = connectionPOSTRetrofit().create(ApiPokeApiInterface::class.java)
+        var postService = connectionPOSTRetrofit().create(PostPokeApiInterface::class.java)
 
         private fun connectionRetrofit(): Retrofit {
             return Retrofit.Builder()

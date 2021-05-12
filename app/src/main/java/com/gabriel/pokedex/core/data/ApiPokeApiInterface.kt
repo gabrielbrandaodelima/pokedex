@@ -18,7 +18,5 @@ interface ApiPokeApiInterface {
         @Path("id") id: String
     ): Pokemon
 
-    @POST("23328ac8-0cf2-49f7-9bb2-78d8f38bc9a6/")
-    suspend fun postPokemon(@Body pokemon: Pokemon): Void?
 
 }
